@@ -45,8 +45,6 @@ public class Main {
     }
 
     private static byte[] getImageData(BufferedImage image) {
-        final int height = image.getHeight();
-        final int width = image.getWidth();
         final BufferedImage rescaledImage =
                 new BufferedImage(outputWidth, outputHeight, BufferedImage.TYPE_BYTE_GRAY);
         final Graphics rescaledGraphics = rescaledImage.getGraphics();
@@ -82,13 +80,16 @@ public class Main {
 
     private static void writeFile(char[] output) {
         int offset = 0;
-        try (BufferedWriter out = new BufferedWriter(new FileWriter(new File("output.txt")))) {
+        final File file = new File(Constants.OUTPUT_FILE_NAME);
+        try (BufferedWriter out = new BufferedWriter(new FileWriter(file))) {
             for (int i = 0; i < outputHeight; i++) {
                 out.write(output, offset, outputWidth);
                 offset += outputWidth;
                 out.newLine();
             }
+            System.out.println("Success! You can find the resulting file here:\r\n " + file.getAbsolutePath());
         } catch (IOException e) {
+            System.out.println("An error has occurred while writing the result file!");
             e.printStackTrace();
         }
     }
