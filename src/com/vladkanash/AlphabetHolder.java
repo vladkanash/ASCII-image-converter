@@ -12,8 +12,13 @@ class AlphabetHolder {
     private final int step;
 
     AlphabetHolder(final String charSet) {
-        if (charSet == null || charSet.equals(Constants.DEFAULT_ALPHABET)) {
+        if (charSet == null ||
+            charSet.isEmpty() ||
+            charSet.equals(Constants.DEFAULT_ALPHABET)) {
+
             this.alphabet = Constants.DEFAULT_ALPHABET;
+        } else if (charSet.length() == 1) {
+            this.alphabet = createAlphabet(charSet + " ");
         } else {
             this.alphabet = createAlphabet(charSet);
         }
